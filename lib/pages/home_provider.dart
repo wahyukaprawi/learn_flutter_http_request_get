@@ -27,7 +27,7 @@ class HomeProvider extends StatelessWidget {
                 width: 100,
                 child: Consumer<HttpProvider>(
                   builder: (context, value, child) => Image.network(
-                    (value.data["avatar"] == null) ? "https://reqres.in/img/faces/11-image.jpg" : value.data["avatar"],
+                    (value.data["avatar"] == null) ? "https://via.placeholder.com/150" : value.data["avatar"],
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -47,7 +47,7 @@ class HomeProvider extends StatelessWidget {
             FittedBox(
               child: Consumer<HttpProvider>(
                 builder: (context, value, child) => Text(
-                  (value.data["first_name"] == null) && (value.data["last_name"] == null) ? "ID : Belum ada data" : value.data["first_name"] + " " + value.data["last_name"],
+                  (value.data["first_name"] == null) && (value.data["last_name"] == null) ? "Belum ada data" : value.data["first_name"] + " " + value.data["last_name"],
                   style: const TextStyle(fontSize: 20),
                 ),
               ),
@@ -57,22 +57,38 @@ class HomeProvider extends StatelessWidget {
             FittedBox(
               child: Consumer<HttpProvider>(
                 builder: (context, value, child) => Text(
-                  (value.data["email"] == null) ? "ID : Belum ada data" : value.data["email"],
+                  (value.data["email"] == null) ? "Belum ada data" : value.data["email"],
                   style: const TextStyle(fontSize: 20),
                 ),
               ),
             ),
             const SizedBox(height: 100),
-            OutlinedButton(
-              onPressed: () {
-                dataProvider.connectAPI((1 + Random().nextInt(10)).toString());
-              },
-              child: const Text(
-                "GET DATA",
-                style: TextStyle(
-                  fontSize: 25,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                OutlinedButton(
+                  onPressed: () {
+                    dataProvider.connectAPI((1 + Random().nextInt(10)).toString(), context);
+                  },
+                  child: const Text(
+                    "GET DATA",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
                 ),
-              ),
+                OutlinedButton(
+                  onPressed: () {
+                    dataProvider.deleteData(context);
+                  },
+                  child: const Text(
+                    "DELETE DATA",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
